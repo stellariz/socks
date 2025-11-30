@@ -1,6 +1,5 @@
 package ru.stellariz.socks;
 
-
 import ru.stellariz.socks.socks4.SocksServer;
 
 public class SocksProxy {

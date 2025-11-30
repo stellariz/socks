@@ -12,8 +12,8 @@ public class SocksServer implements Runnable {
     // Порт сервера для подключения
     private int port;
 
-    private SocksServer() {}
-
+    private SocksServer() {
+    }
 
     public void start() {
         Thread.ofPlatform().start(this);
@@ -23,14 +23,18 @@ public class SocksServer implements Runnable {
     public void run() {
         System.out.println("Server is running!");
         try (var s = new ServerSocket(port)) {
+            // TODO(r.popov): make condition more concrete
             while (true) {
                 Socket acceptedClient = s.accept();
-                System.out.printf("Client connection [%s] was accepted\n", acceptedClient.getLocalAddress().toString());
+                System.out.printf("Thread [%s]: Client connection [%s] was accepted\n",
+                        Thread.currentThread().getName(),
+                        acceptedClient.getLocalAddress().toString());
                 Thread.ofPlatform().start(() -> new ConnectionHandler(acceptedClient));
             }
         } catch (IOException e) {
-            // TODO(r.popov): provide logging
-            System.err.printf("Error during open socket: [%s]\n", e.getMessage());
+            System.err.printf("Thread [%s]: Error during open socket: [%s]\n",
+                    Thread.currentThread().getName(),
+                    e.getMessage());
             throw new RuntimeException(e);
         }
     }
