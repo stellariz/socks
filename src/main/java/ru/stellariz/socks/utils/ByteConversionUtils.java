@@ -5,6 +5,9 @@ public class ByteConversionUtils {
         return (unsignedInt(b1) << 8) | unsignedInt(b2);
     }
 
+    public static byte[] convertPortToBytes(int port) {
+        return new byte[]{(byte)(port >> 8), (byte)(port & 0xff)};
+    }
     public static int unsignedInt(byte b) {
         return b & 0xFF;
     }

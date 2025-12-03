@@ -23,7 +23,6 @@ public class SocksServer implements Runnable {
     public void run() {
         System.out.println("Server is running!");
         try (var s = new ServerSocket(port)) {
-            // TODO(r.popov): make condition more concrete
             while (true) {
                 Socket acceptedClient = s.accept();
                 System.out.printf("Thread [%s]: Client connection [%s] was accepted\n",

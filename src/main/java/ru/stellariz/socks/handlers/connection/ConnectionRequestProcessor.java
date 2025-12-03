@@ -14,5 +14,4 @@ interface ConnectionRequestProcessor {
             ConnectionRequestContext.ConnectionRequestContextBuilder context, InputStream is
     );
 
-
 }

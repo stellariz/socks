@@ -12,11 +12,11 @@ class ConnectionTypeRequestProcessor implements ConnectionRequestProcessor {
             ConnectionRequestContext.ConnectionRequestContextBuilder context, InputStream is) {
         ConnectionMessageType messageType;
         try {
-            int connectionType = is.read();
+            byte connectionType = (byte) is.read();
             if (connectionType == -1) {
                 throw new IOException("No data available for reading CD value");
             }
-            messageType = ConnectionMessageType.fromByte((byte) connectionType);
+            messageType = ConnectionMessageType.fromByte(connectionType);
             if (messageType == null) {
                 throw new IllegalArgumentException("Incorrect value for CD: %d".formatted(connectionType));
             }

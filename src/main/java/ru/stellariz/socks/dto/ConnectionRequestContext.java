@@ -18,6 +18,16 @@ public record ConnectionRequestContext(
         return new ConnectionRequestContextBuilder();
     }
 
+    public ConnectionRequestContextBuilder mutate() {
+        return new ConnectionRequestContextBuilder(
+                socksVersion,
+                messageType,
+                dstPort,
+                resolvedDstAddress.getAddress(),
+                resolvedDstAddress, userId, exception
+        );
+    }
+
     public static class ConnectionRequestContextBuilder {
         private SocksVersion socksVersion;
         private ConnectionMessageType messageType;
@@ -26,6 +36,21 @@ public record ConnectionRequestContext(
         private InetAddress resolvedDstAddress;
         private String userId;
         private ConnectionException exception;
+
+        private ConnectionRequestContextBuilder() {
+        }
+
+        private ConnectionRequestContextBuilder(SocksVersion socksVersion, ConnectionMessageType messageType,
+                                                int dstPort, byte[] dstAddress, InetAddress resolvedDstAddress,
+                                                String userId, ConnectionException exception) {
+            this.socksVersion = socksVersion;
+            this.messageType = messageType;
+            this.dstPort = dstPort;
+            this.dstAddress = dstAddress;
+            this.resolvedDstAddress = resolvedDstAddress;
+            this.userId = userId;
+            this.exception = exception;
+        }
 
         public byte[] getDstAddress() {
             return dstAddress;
