@@ -1,4 +1,4 @@
-package ru.stellariz.socks.utils;
+package ru.stellariz.socks.common.utils;
 
 public enum SocksVersion {
     SOCKS_4((byte)0x04),

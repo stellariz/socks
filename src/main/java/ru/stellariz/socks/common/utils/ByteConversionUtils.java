@@ -1,4 +1,4 @@
-package ru.stellariz.socks.utils;
+package ru.stellariz.socks.common.utils;
 
 public class ByteConversionUtils {
     public static int convertToPortNumber(byte b1, byte b2) {

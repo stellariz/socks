@@ -1,9 +1,9 @@
-package ru.stellariz.socks.dto;
+package ru.stellariz.socks.socks4.context;
 
 import java.net.InetAddress;
-import ru.stellariz.socks.exception.ConnectionException;
-import ru.stellariz.socks.handlers.connection.ConnectionMessageType;
-import ru.stellariz.socks.utils.SocksVersion;
+import ru.stellariz.socks.common.utils.ConnectionMessageType;
+import ru.stellariz.socks.common.exception.ConnectionException;
+import ru.stellariz.socks.common.utils.SocksVersion;
 
 public record ConnectionRequestContext(
         SocksVersion socksVersion,

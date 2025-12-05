@@ -1,4 +1,4 @@
-package ru.stellariz.socks.handlers.connection;
+package ru.stellariz.socks.common.utils;
 
 public enum ConnectionMessageType {
     CONNECT((byte)0x01),

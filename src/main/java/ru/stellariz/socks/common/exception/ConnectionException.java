@@ -1,4 +1,4 @@
-package ru.stellariz.socks.exception;
+package ru.stellariz.socks.common.exception;
 
 public class ConnectionException extends RuntimeException {
     public ConnectionException() {

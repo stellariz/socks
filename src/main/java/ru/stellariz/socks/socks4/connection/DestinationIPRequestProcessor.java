@@ -1,11 +1,13 @@
-package ru.stellariz.socks.handlers.connection;
+package ru.stellariz.socks.socks4.connection;
 
 import java.io.IOException;
 import java.io.InputStream;
-import ru.stellariz.socks.dto.ConnectionRequestContext;
-import ru.stellariz.socks.exception.ConnectionException;
+import ru.stellariz.socks.common.ConnectionRequestProcessor;
+import ru.stellariz.socks.common.exception.ConnectionException;
+import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
-class DestinationIPRequestProcessor implements ConnectionRequestProcessor {
+class DestinationIPRequestProcessor implements
+        ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder> {
 
     @Override
     public ConnectionRequestContext.ConnectionRequestContextBuilder processRequest(

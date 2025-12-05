@@ -1,4 +1,4 @@
-package ru.stellariz.socks;
+package ru.stellariz.socks.common.session;
 
 import java.io.IOException;
 import java.io.InputStream;

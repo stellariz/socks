@@ -3,16 +3,16 @@ package ru.stellariz.socks.socks4;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import ru.stellariz.socks.handlers.ConnectionHandler;
+import ru.stellariz.socks.socks4.connection.handlers.MainConnectionHandler;
 
 /**
  * SOCKS4/4a server
  */
-public class SocksServer implements Runnable {
+public class Socks4Server implements Runnable {
     // Порт сервера для подключения
     private int port;
 
-    private SocksServer() {
+    private Socks4Server() {
     }
 
     public void start() {
@@ -28,7 +28,7 @@ public class SocksServer implements Runnable {
                 System.out.printf("Thread [%s]: Client connection [%s] was accepted\n",
                         Thread.currentThread().getName(),
                         acceptedClient.getLocalAddress().toString());
-                Thread.ofPlatform().start(() -> new ConnectionHandler(acceptedClient));
+                Thread.ofPlatform().start(() -> new MainConnectionHandler(acceptedClient));
             }
         } catch (IOException e) {
             System.err.printf("Thread [%s]: Error during open socket: [%s]\n",
@@ -51,10 +51,10 @@ public class SocksServer implements Runnable {
     }
 
     public static class SocksServerBuilder {
-        private final SocksServer socksServer;
+        private final Socks4Server socksServer;
 
         public SocksServerBuilder() {
-            this.socksServer = new SocksServer();
+            this.socksServer = new Socks4Server();
         }
 
         public SocksServerBuilder withPort(int port) {
@@ -62,7 +62,7 @@ public class SocksServer implements Runnable {
             return this;
         }
 
-        public SocksServer build() {
+        public Socks4Server build() {
             return socksServer;
         }
     }

@@ -1,35 +1,33 @@
-package ru.stellariz.socks.handlers;
+package ru.stellariz.socks.socks4.connection.handlers;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Map;
-import ru.stellariz.socks.SessionHandler;
-import ru.stellariz.socks.exception.ConnectionException;
-import ru.stellariz.socks.handlers.connection.ConnectionMessageType;
-import ru.stellariz.socks.handlers.connection.ConnectionRequestChainProcessor;
-import ru.stellariz.socks.handlers.response.BindConnectionOnSucceedHandler;
-import ru.stellariz.socks.handlers.response.ConnectionTypeHandler;
-import ru.stellariz.socks.handlers.response.ConnectionHandlerOnFailureHandler;
-import ru.stellariz.socks.handlers.response.ConnectionHandlerOnSucceedHandler;
+import ru.stellariz.socks.common.ConnectionTypeHandler;
+import ru.stellariz.socks.common.exception.ConnectionException;
+import ru.stellariz.socks.common.session.SessionHandler;
+import ru.stellariz.socks.common.utils.ConnectionMessageType;
+import ru.stellariz.socks.socks4.connection.Socks4ConnectionRequestChainProcessor;
+import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
-public class ConnectionHandler {
+public class MainConnectionHandler {
     private static final int SO_DEFAULT_TIMEOUT = 2 * 60 * 100;
 
-    private static final ConnectionRequestChainProcessor SOCKS4_PROCESSOR =
-            ConnectionRequestChainProcessor.buildSocks4ConnectionMessageProcessorChain();
+    private static final Socks4ConnectionRequestChainProcessor SOCKS4_PROCESSOR =
+            new Socks4ConnectionRequestChainProcessor();
 
-    private static final Map<ConnectionMessageType, ConnectionTypeHandler> connectionHandlersMap =
+    private static final Map<ConnectionMessageType, ConnectionTypeHandler<ConnectionRequestContext>> connectionHandlersMap =
             Map.of(
                     ConnectionMessageType.CONNECT, new ConnectionHandlerOnSucceedHandler(),
                     ConnectionMessageType.BIND, new BindConnectionOnSucceedHandler()
             );
 
-    private static final ConnectionTypeHandler onFailureHandler =
+    private static final ConnectionTypeHandler<ConnectionRequestContext> onFailureHandler =
             new ConnectionHandlerOnFailureHandler();
 
-    public ConnectionHandler(Socket client) {
+    public MainConnectionHandler(Socket client) {
         try (var isOrigin = client.getInputStream();
              var osOrigin = client.getOutputStream();
              client;
@@ -43,7 +41,7 @@ public class ConnectionHandler {
 
 
     private Socket handleClientRequest(InputStream clientIs, OutputStream clientOs) throws IOException {
-        var connectionRequestContext = SOCKS4_PROCESSOR.processRequest(clientIs);
+        var connectionRequestContext = SOCKS4_PROCESSOR.buildContextFromClientRequest(clientIs);
         if (connectionRequestContext.exception() != null) {
             onFailureHandler.createSocket(clientOs, connectionRequestContext);
             // Выбрасываем исключение и закрываем сокеты с помощью try-with-resources

@@ -1,16 +1,16 @@
-package ru.stellariz.socks.handlers.response;
+package ru.stellariz.socks.socks4.connection.handlers;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ConnectException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import ru.stellariz.socks.dto.ConnectionRequestContext;
-import ru.stellariz.socks.handlers.connection.ConnectionMessageResponse;
-import ru.stellariz.socks.utils.ByteConversionUtils;
+import ru.stellariz.socks.common.ConnectionTypeHandler;
+import ru.stellariz.socks.common.utils.ByteConversionUtils;
+import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
+import ru.stellariz.socks.common.utils.ConnectionMessageResponse;
 
-public class BindConnectionOnSucceedHandler implements ConnectionTypeHandler {
+public class BindConnectionOnSucceedHandler implements ConnectionTypeHandler<ConnectionRequestContext> {
     private static final int ANY_PORT = 0;
 
     @Override

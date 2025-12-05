@@ -1,15 +1,17 @@
-package ru.stellariz.socks.handlers.connection;
+package ru.stellariz.socks.socks4.connection;
 
 import java.io.IOException;
 import java.io.InputStream;
-import ru.stellariz.socks.dto.ConnectionRequestContext;
-import ru.stellariz.socks.exception.ConnectionException;
-import ru.stellariz.socks.utils.SocksVersion;
+import ru.stellariz.socks.common.ConnectionRequestProcessor;
+import ru.stellariz.socks.common.exception.ConnectionException;
+import ru.stellariz.socks.common.utils.SocksVersion;
+import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
 /**
  * Обработчик версии протокола Socks
  */
-class SocksVersionRequestProcessor implements ConnectionRequestProcessor {
+class SocksVersionRequestProcessor implements
+        ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder>{
 
     private final SocksVersion socksVersionProtocol;
 
