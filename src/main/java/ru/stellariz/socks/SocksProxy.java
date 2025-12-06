@@ -1,6 +1,6 @@
 package ru.stellariz.socks;
 
-import ru.stellariz.socks.socks4.Socks4Server;
+import ru.stellariz.socks.socks5.Socks5Server;
 
 public class SocksProxy {
     private static final int DEFAULT_SOCKS_PORT = 1080;
@@ -8,7 +8,7 @@ public class SocksProxy {
     public static void main(String[] args) {
         int socksServerPort = resolvePort(args);
 
-        Socks4Server socksServer = Socks4Server.builder()
+        Socks5Server socksServer = Socks5Server.builder()
                 .withPort(socksServerPort)
                 .build();
 

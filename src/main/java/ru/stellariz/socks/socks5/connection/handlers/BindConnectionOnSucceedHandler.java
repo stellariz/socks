@@ -1,4 +1,4 @@
-package ru.stellariz.socks.socks4.connection.handlers;
+package ru.stellariz.socks.socks5.connection.handlers;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,8 +7,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import ru.stellariz.socks.common.ConnectionTypeHandler;
 import ru.stellariz.socks.common.utils.ByteConversionUtils;
-import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
-import ru.stellariz.socks.common.utils.socks4.ConnectionMessageResponse;
+import ru.stellariz.socks.common.utils.SocksVersion;
+import ru.stellariz.socks.common.utils.socks5.ConnectionMessageResponse;
+import ru.stellariz.socks.socks5.context.AddressType;
+import ru.stellariz.socks.socks5.context.ConnectionRequestContext;
 
 public class BindConnectionOnSucceedHandler implements ConnectionTypeHandler<ConnectionRequestContext> {
     private static final int ANY_PORT = 0;
@@ -43,10 +45,22 @@ public class BindConnectionOnSucceedHandler implements ConnectionTypeHandler<Con
 
     private byte[] createSucceedBindMessage(int port) {
         byte[] portInBytes = ByteConversionUtils.convertPortToBytes(port);
-        return new byte[]{0, ConnectionMessageResponse.REQUEST_GRANTED.getValue(), portInBytes[0], portInBytes[1], 0, 0, 0, 0};
+        return new byte[]{
+                SocksVersion.SOCKS_5.getProtocolVersion(),
+                ConnectionMessageResponse.SUCCEED.getValue(),
+                0,
+                AddressType.IP_V4.getValue(),
+                0, 0, 0, 0,
+                portInBytes[0], portInBytes[1]};
     }
 
     private byte[] createFailedConnectionEstablishedMessage() {
-        return new byte[]{0, ConnectionMessageResponse.REQUEST_REJECTED.getValue(), 0, 0};
+        return new byte[]{
+                SocksVersion.SOCKS_5.getProtocolVersion(),
+                ConnectionMessageResponse.REQUEST_REJECTED.getValue(),
+                0,
+                AddressType.IP_V4.getValue(),
+                0, 0, 0, 0,
+                0, 0};
     }
 }

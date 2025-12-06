@@ -1,4 +1,4 @@
-package ru.stellariz.socks.common.utils;
+package ru.stellariz.socks.common.utils.socks4;
 
 //	90: request granted
 //	91: request rejected or failed

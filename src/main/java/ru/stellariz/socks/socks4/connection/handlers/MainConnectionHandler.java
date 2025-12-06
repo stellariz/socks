@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Map;
 import ru.stellariz.socks.common.ConnectionTypeHandler;
+import ru.stellariz.socks.common.OnFailedConnectionHandler;
 import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.common.session.SessionHandler;
 import ru.stellariz.socks.common.utils.ConnectionMessageType;
@@ -24,7 +25,7 @@ public class MainConnectionHandler {
                     ConnectionMessageType.BIND, new BindConnectionOnSucceedHandler()
             );
 
-    private static final ConnectionTypeHandler<ConnectionRequestContext> onFailureHandler =
+    private static final OnFailedConnectionHandler onFailureHandler =
             new ConnectionHandlerOnFailureHandler();
 
     public MainConnectionHandler(Socket client) {
@@ -43,7 +44,7 @@ public class MainConnectionHandler {
     private Socket handleClientRequest(InputStream clientIs, OutputStream clientOs) throws IOException {
         var connectionRequestContext = SOCKS4_PROCESSOR.buildContextFromClientRequest(clientIs);
         if (connectionRequestContext.exception() != null) {
-            onFailureHandler.createSocket(clientOs, connectionRequestContext);
+            onFailureHandler.sendFailedConnectionMessage(clientOs);
             // Выбрасываем исключение и закрываем сокеты с помощью try-with-resources
             throw connectionRequestContext.exception();
         }
@@ -53,12 +54,13 @@ public class MainConnectionHandler {
 
         var connectionHandler =
                 connectionHandlersMap.get(connectionRequestContext.messageType());
+
         Socket destSocket;
         try {
             destSocket = connectionHandler.createSocket(clientOs, connectionRequestContext);
             destSocket.setSoTimeout(SO_DEFAULT_TIMEOUT);
         } catch (IOException ex) {
-            onFailureHandler.createSocket(clientOs, connectionRequestContext);
+            onFailureHandler.sendFailedConnectionMessage(clientOs);
             System.err.printf("Thread [%s]: Unable to open connection\n", Thread.currentThread().getName());
             throw ex;
         }

@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import ru.stellariz.socks.common.ConnectionTypeHandler;
 import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
-import ru.stellariz.socks.common.utils.ConnectionMessageResponse;
+import ru.stellariz.socks.common.utils.socks4.ConnectionMessageResponse;
 
 public class ConnectionHandlerOnSucceedHandler implements ConnectionTypeHandler<ConnectionRequestContext> {
 
