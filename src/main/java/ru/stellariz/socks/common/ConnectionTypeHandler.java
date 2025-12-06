@@ -9,5 +9,6 @@ import java.net.Socket;
  * @param <T> - контекст подключения
  */
 public interface ConnectionTypeHandler<T> {
+
     Socket createSocket(OutputStream os, T connectionRequestContext) throws IOException;
 }

@@ -2,10 +2,10 @@ package ru.stellariz.socks.socks5.context;
 
 import java.util.List;
 import ru.stellariz.socks.common.utils.SocksVersion;
-import ru.stellariz.socks.socks5.authentication.AuthenticationMethod;
+import ru.stellariz.socks.socks5.connection.authentication.AuthenticationMethod;
 import ru.stellariz.socks.socks5.exception.AuthenticationException;
 
-public record AuthenticationContext(
+public record ConnectionAuthenticationContext(
         SocksVersion protocolVersion,
         int methodsNumber,
         List<AuthenticationMethod> clientAuthentication,
@@ -43,8 +43,8 @@ public record AuthenticationContext(
             return this;
         }
 
-        public AuthenticationContext build() {
-            return new AuthenticationContext(protocolVersion, methodsNumber, clientAuthentication, exception);
+        public ConnectionAuthenticationContext build() {
+            return new ConnectionAuthenticationContext(protocolVersion, methodsNumber, clientAuthentication, exception);
         }
 
         public AuthenticationException getException() {

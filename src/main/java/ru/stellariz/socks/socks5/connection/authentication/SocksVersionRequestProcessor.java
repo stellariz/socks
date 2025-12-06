@@ -1,17 +1,17 @@
-package ru.stellariz.socks.socks5.authentication;
+package ru.stellariz.socks.socks5.connection.authentication;
 
 import java.io.IOException;
 import java.io.InputStream;
 import ru.stellariz.socks.common.ConnectionRequestProcessor;
 import ru.stellariz.socks.common.utils.SocksVersion;
-import ru.stellariz.socks.socks5.context.AuthenticationContext;
+import ru.stellariz.socks.socks5.context.ConnectionAuthenticationContext;
 import ru.stellariz.socks.socks5.exception.AuthenticationException;
 
 /**
  * Обработчик версии протокола Socks
  */
 class SocksVersionRequestProcessor implements
-        ConnectionRequestProcessor<AuthenticationContext.AuthenticationContextBuilder>{
+        ConnectionRequestProcessor<ConnectionAuthenticationContext.AuthenticationContextBuilder> {
 
     private final SocksVersion socksVersionProtocol;
 
@@ -20,8 +20,8 @@ class SocksVersionRequestProcessor implements
     }
 
     @Override
-    public AuthenticationContext.AuthenticationContextBuilder processRequest(
-            AuthenticationContext.AuthenticationContextBuilder context, InputStream is) {
+    public ConnectionAuthenticationContext.AuthenticationContextBuilder processRequest(
+            ConnectionAuthenticationContext.AuthenticationContextBuilder context, InputStream is) {
         try {
             int socksVersion = is.read();
             if (socksVersion == -1) {

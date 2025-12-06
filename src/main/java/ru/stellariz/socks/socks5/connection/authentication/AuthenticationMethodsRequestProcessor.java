@@ -1,20 +1,20 @@
-package ru.stellariz.socks.socks5.authentication;
+package ru.stellariz.socks.socks5.connection.authentication;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import ru.stellariz.socks.common.ConnectionRequestProcessor;
-import ru.stellariz.socks.socks5.context.AuthenticationContext;
+import ru.stellariz.socks.socks5.context.ConnectionAuthenticationContext;
 import ru.stellariz.socks.socks5.exception.AuthenticationException;
 
 class AuthenticationMethodsRequestProcessor implements
-        ConnectionRequestProcessor<AuthenticationContext.AuthenticationContextBuilder> {
+        ConnectionRequestProcessor<ConnectionAuthenticationContext.AuthenticationContextBuilder> {
 
 
     @Override
-    public AuthenticationContext.AuthenticationContextBuilder processRequest(
-            AuthenticationContext.AuthenticationContextBuilder context, InputStream is) {
+    public ConnectionAuthenticationContext.AuthenticationContextBuilder processRequest(
+            ConnectionAuthenticationContext.AuthenticationContextBuilder context, InputStream is) {
         List<AuthenticationMethod> clientMethods = new ArrayList<>();
         try {
             for (int i = 0; i < context.getMethodsNumber(); ++i) {

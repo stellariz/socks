@@ -1,4 +1,4 @@
-package ru.stellariz.socks.socks5.authentication;
+package ru.stellariz.socks.socks5.connection.authentication;
 
 import java.util.List;
 

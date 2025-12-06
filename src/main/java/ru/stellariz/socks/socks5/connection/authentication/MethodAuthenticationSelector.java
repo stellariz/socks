@@ -1,13 +1,13 @@
-package ru.stellariz.socks.socks5.authentication;
+package ru.stellariz.socks.socks5.connection.authentication;
 
 import java.io.InputStream;
 import java.util.List;
 import ru.stellariz.socks.common.ConnectionRequestChainProcessor;
 import ru.stellariz.socks.common.utils.SocksVersion;
-import ru.stellariz.socks.socks5.context.AuthenticationContext;
+import ru.stellariz.socks.socks5.context.ConnectionAuthenticationContext;
 
 public class MethodAuthenticationSelector
-        extends ConnectionRequestChainProcessor<AuthenticationContext.AuthenticationContextBuilder, AuthenticationContext> {
+        extends ConnectionRequestChainProcessor<ConnectionAuthenticationContext.AuthenticationContextBuilder, ConnectionAuthenticationContext> {
 
 
     public MethodAuthenticationSelector() {
@@ -21,8 +21,8 @@ public class MethodAuthenticationSelector
 
 
     @Override
-    public AuthenticationContext buildContextFromClientRequest(InputStream is) {
-        var contextBuilder = AuthenticationContext.builder();
+    public ConnectionAuthenticationContext buildContextFromClientRequest(InputStream is) {
+        var contextBuilder = ConnectionAuthenticationContext.builder();
         for (var processor : requestProcessors) {
             contextBuilder = processor.processRequest(contextBuilder, is);
             if (contextBuilder.getException() != null) {
