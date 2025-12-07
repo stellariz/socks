@@ -7,6 +7,9 @@ import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.socks5.context.AddressType;
 import ru.stellariz.socks.socks5.context.ConnectionRequestContext;
 
+/**
+ * Обработчик типа IP адреса хоста для подключения
+ */
 class AddressTypeProcessor implements
         ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder> {
 

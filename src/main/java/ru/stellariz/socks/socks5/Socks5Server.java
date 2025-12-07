@@ -3,7 +3,7 @@ package ru.stellariz.socks.socks5;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import ru.stellariz.socks.socks5.connection.handlers.MainConnectionHandler;
+import ru.stellariz.socks.socks5.connection.handlers.ClientConnectionHandler;
 
 /**
  * SOCKS5 server
@@ -28,7 +28,7 @@ public class Socks5Server implements Runnable {
                 System.out.printf("Thread [%s]: Client connection [%s] was accepted\n",
                         Thread.currentThread().getName(),
                         acceptedClient.getLocalAddress().toString());
-                Thread.ofPlatform().start(() -> new MainConnectionHandler(acceptedClient));
+                Thread.ofPlatform().start(() -> new ClientConnectionHandler(acceptedClient));
             }
         } catch (IOException e) {
             System.err.printf("Thread [%s]: Error during open socket: [%s]\n",

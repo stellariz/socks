@@ -8,6 +8,9 @@ import ru.stellariz.socks.common.ConnectionRequestProcessor;
 import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
+/**
+ * Обработчик UserId
+ */
 class UserIdRequestProcessor implements
         ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder> {
 

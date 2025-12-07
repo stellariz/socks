@@ -6,6 +6,9 @@ import ru.stellariz.socks.common.ConnectionRequestProcessor;
 import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
+/**
+ * Обработчик IP адреса (IPv4) хоста назначения
+ */
 class DestinationIPRequestProcessor implements
         ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder> {
 

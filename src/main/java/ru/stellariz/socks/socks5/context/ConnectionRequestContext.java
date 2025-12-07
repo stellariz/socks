@@ -2,12 +2,22 @@ package ru.stellariz.socks.socks5.context;
 
 import java.net.InetAddress;
 import ru.stellariz.socks.common.exception.ConnectionException;
-import ru.stellariz.socks.common.utils.ConnectionMessageType;
+import ru.stellariz.socks.common.utils.OperationType;
 import ru.stellariz.socks.common.utils.SocksVersion;
 
+/**
+ * Контекст запроса клиента при установлении соединения
+ *
+ * @param socksVersion версия протокола SOCKS
+ * @param operationType тип соединения
+ * @param addressType тип IP адреса
+ * @param resolvedDstAddress InetAddress хоста (после резолвинга в случае DNS запроса)
+ * @param dstPort порт хоста
+ * @param exception ошибка при подключении
+ */
 public record ConnectionRequestContext(
         SocksVersion socksVersion,
-        ConnectionMessageType messageType,
+        OperationType operationType,
         AddressType addressType,
         InetAddress resolvedDstAddress,
         int dstPort,
@@ -20,7 +30,7 @@ public record ConnectionRequestContext(
     public ConnectionRequestContextBuilder mutate() {
         return new ConnectionRequestContextBuilder(
                 socksVersion,
-                messageType,
+                operationType,
                 addressType,
                 dstPort,
                 resolvedDstAddress,
@@ -30,7 +40,7 @@ public record ConnectionRequestContext(
 
     public static class ConnectionRequestContextBuilder {
         private SocksVersion socksVersion;
-        private ConnectionMessageType messageType;
+        private OperationType operationType;
         private AddressType addressType;
         private int dstPort;
         private InetAddress resolvedDstAddress;
@@ -39,11 +49,11 @@ public record ConnectionRequestContext(
         private ConnectionRequestContextBuilder() {
         }
 
-        private ConnectionRequestContextBuilder(SocksVersion socksVersion, ConnectionMessageType messageType,
+        private ConnectionRequestContextBuilder(SocksVersion socksVersion, OperationType operationType,
                                                 AddressType addressType, int dstPort,
                                                 InetAddress resolvedDstAddress, ConnectionException exception) {
             this.socksVersion = socksVersion;
-            this.messageType = messageType;
+            this.operationType = operationType;
             this.addressType = addressType;
             this.dstPort = dstPort;
             this.resolvedDstAddress = resolvedDstAddress;
@@ -78,8 +88,8 @@ public record ConnectionRequestContext(
             return this;
         }
 
-        public ConnectionRequestContextBuilder withMessageType(ConnectionMessageType messageType) {
-            this.messageType = messageType;
+        public ConnectionRequestContextBuilder withOperationType(OperationType operationType) {
+            this.operationType = operationType;
             return this;
         }
 
@@ -90,7 +100,7 @@ public record ConnectionRequestContext(
         }
 
         public ConnectionRequestContext build() {
-            return new ConnectionRequestContext(socksVersion, messageType, addressType, resolvedDstAddress, dstPort, exception);
+            return new ConnectionRequestContext(socksVersion, operationType, addressType, resolvedDstAddress, dstPort, exception);
         }
     }
 }

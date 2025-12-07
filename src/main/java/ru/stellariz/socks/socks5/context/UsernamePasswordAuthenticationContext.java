@@ -3,6 +3,14 @@ package ru.stellariz.socks.socks5.context;
 import ru.stellariz.socks.common.utils.NegotiationVersion;
 import ru.stellariz.socks.socks5.exception.UsernamePasswordAuthenticationException;
 
+/**
+ * Контекст при username-password аутентификации пользователя
+ *
+ * @param negotiationVersion версия протокола (НЕ SOCKS)
+ * @param username имя пользователя
+ * @param password пароль
+ * @param exception ошибка при аутентификации пользователя
+ */
 public record UsernamePasswordAuthenticationContext(
         NegotiationVersion negotiationVersion,
         String username,

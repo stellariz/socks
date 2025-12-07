@@ -16,7 +16,7 @@ class NegotiationVersionRequestProcessor implements
             UsernamePasswordAuthenticationContext.UsernamePasswordAuthenticationContextBuilder context, InputStream is) {
         NegotiationVersion negotiationVersion;
         try {
-            byte ver = (byte)is.read();
+            byte ver = (byte) is.read();
             if (ver == -1) {
                 throw new IOException("No data available for reading negotiation version");
             }

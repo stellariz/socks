@@ -7,11 +7,11 @@ import java.net.Socket;
 import ru.stellariz.socks.common.ConnectionTypeHandler;
 import ru.stellariz.socks.common.utils.ByteConversionUtils;
 import ru.stellariz.socks.common.utils.SocksVersion;
-import ru.stellariz.socks.common.utils.socks5.ConnectionMessageResponse;
+import ru.stellariz.socks.common.utils.socks5.ConnectionDecisionResponse;
 import ru.stellariz.socks.socks5.context.AddressType;
 import ru.stellariz.socks.socks5.context.ConnectionRequestContext;
 
-public class ConnectionHandlerOnSucceedHandler implements ConnectionTypeHandler<ConnectionRequestContext> {
+public class SucceedConnectionHandler implements ConnectionTypeHandler<ConnectionRequestContext> {
 
     @Override
     public Socket createSocket(OutputStream os, ConnectionRequestContext connectionRequestContext) throws IOException {
@@ -29,7 +29,7 @@ public class ConnectionHandlerOnSucceedHandler implements ConnectionTypeHandler<
         byte[] portInBytes = ByteConversionUtils.convertPortToBytes(destSocketPort);
         return new byte[]{
                 SocksVersion.SOCKS_5.getProtocolVersion(),
-                ConnectionMessageResponse.SUCCEED.getValue(),
+                ConnectionDecisionResponse.SUCCEED.getValue(),
                 0,
                 AddressType.IP_V4.getValue(),
                 0x7f, 0, 0, 0x01,

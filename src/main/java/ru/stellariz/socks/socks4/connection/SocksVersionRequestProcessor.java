@@ -8,7 +8,7 @@ import ru.stellariz.socks.common.utils.SocksVersion;
 import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
 /**
- * Обработчик версии протокола Socks
+ * Обработчик версии протокола SOCKS
  */
 class SocksVersionRequestProcessor implements
         ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder>{
@@ -23,11 +23,11 @@ class SocksVersionRequestProcessor implements
     public ConnectionRequestContext.ConnectionRequestContextBuilder processRequest(
             ConnectionRequestContext.ConnectionRequestContextBuilder context, InputStream is) {
         try {
-            int socksVersion = is.read();
+            byte socksVersion = (byte) is.read();
             if (socksVersion == -1) {
                 throw new IOException("No data available for reading SOCKS version");
             }
-            if ((byte)socksVersion != socksVersionProtocol.getProtocolVersion()) {
+            if (socksVersion != socksVersionProtocol.getProtocolVersion()) {
                 throw new IllegalArgumentException("Unsupported protocol version");
             }
         } catch (IllegalArgumentException | IOException ex) {

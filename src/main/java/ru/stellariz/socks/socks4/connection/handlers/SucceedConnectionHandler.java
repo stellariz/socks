@@ -6,9 +6,12 @@ import java.net.InetAddress;
 import java.net.Socket;
 import ru.stellariz.socks.common.ConnectionTypeHandler;
 import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
-import ru.stellariz.socks.common.utils.socks4.ConnectionMessageResponse;
+import ru.stellariz.socks.common.utils.socks4.ConnectionDecisionResponse;
 
-public class ConnectionHandlerOnSucceedHandler implements ConnectionTypeHandler<ConnectionRequestContext> {
+/**
+ * Формирует сокет к хосту назначения
+ */
+public class SucceedConnectionHandler implements ConnectionTypeHandler<ConnectionRequestContext> {
 
     @Override
     public Socket createSocket(OutputStream os, ConnectionRequestContext connectionRequestContext) throws IOException {
@@ -22,8 +25,8 @@ public class ConnectionHandlerOnSucceedHandler implements ConnectionTypeHandler<
     }
 
     private byte[] createSucceedConnectionEstablishedMessage() {
-        // last 6 bytes are ignored by client
-        return new byte[]{0, ConnectionMessageResponse.REQUEST_GRANTED.getValue(), 0, 0, 0, 0, 0, 0};
+        // последние 6 байт игнорируются клиентом
+        return new byte[]{0, ConnectionDecisionResponse.REQUEST_GRANTED.getValue(), 0, 0, 0, 0, 0, 0};
     }
 
 }

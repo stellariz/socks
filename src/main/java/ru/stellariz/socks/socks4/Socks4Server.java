@@ -3,13 +3,12 @@ package ru.stellariz.socks.socks4;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import ru.stellariz.socks.socks4.connection.handlers.MainConnectionHandler;
+import ru.stellariz.socks.socks4.connection.handlers.ClientConnectionHandler;
 
 /**
  * SOCKS4/4a server
  */
 public class Socks4Server implements Runnable {
-    // Порт сервера для подключения
     private int port;
 
     private Socks4Server() {
@@ -28,7 +27,7 @@ public class Socks4Server implements Runnable {
                 System.out.printf("Thread [%s]: Client connection [%s] was accepted\n",
                         Thread.currentThread().getName(),
                         acceptedClient.getLocalAddress().toString());
-                Thread.ofPlatform().start(() -> new MainConnectionHandler(acceptedClient));
+                Thread.ofPlatform().start(() -> new ClientConnectionHandler(acceptedClient));
             }
         } catch (IOException e) {
             System.err.printf("Thread [%s]: Error during open socket: [%s]\n",

@@ -1,13 +1,23 @@
 package ru.stellariz.socks.socks4.context;
 
 import java.net.InetAddress;
-import ru.stellariz.socks.common.utils.ConnectionMessageType;
+import ru.stellariz.socks.common.utils.OperationType;
 import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.common.utils.SocksVersion;
 
+/**
+ * Контекст запроса клиента при установлении соединения
+ *
+ * @param socksVersion версия протокола SOCKS
+ * @param operationType тип соединения
+ * @param dstPort порт назначения
+ * @param resolvedDstAddress InetAddress хоста (после резолвинга в случае DNS запроса)
+ * @param userId userId
+ * @param exception ошибка при обработке запроса клиента
+ */
 public record ConnectionRequestContext(
         SocksVersion socksVersion,
-        ConnectionMessageType messageType,
+        OperationType operationType,
         int dstPort,
         InetAddress resolvedDstAddress,
         String userId,
@@ -21,7 +31,7 @@ public record ConnectionRequestContext(
     public ConnectionRequestContextBuilder mutate() {
         return new ConnectionRequestContextBuilder(
                 socksVersion,
-                messageType,
+                operationType,
                 dstPort,
                 resolvedDstAddress.getAddress(),
                 resolvedDstAddress, userId, exception
@@ -30,7 +40,7 @@ public record ConnectionRequestContext(
 
     public static class ConnectionRequestContextBuilder {
         private SocksVersion socksVersion;
-        private ConnectionMessageType messageType;
+        private OperationType operationType;
         private int dstPort;
         private byte[] dstAddress;
         private InetAddress resolvedDstAddress;
@@ -40,11 +50,11 @@ public record ConnectionRequestContext(
         private ConnectionRequestContextBuilder() {
         }
 
-        private ConnectionRequestContextBuilder(SocksVersion socksVersion, ConnectionMessageType messageType,
+        private ConnectionRequestContextBuilder(SocksVersion socksVersion, OperationType messageType,
                                                 int dstPort, byte[] dstAddress, InetAddress resolvedDstAddress,
                                                 String userId, ConnectionException exception) {
             this.socksVersion = socksVersion;
-            this.messageType = messageType;
+            this.operationType = messageType;
             this.dstPort = dstPort;
             this.dstAddress = dstAddress;
             this.resolvedDstAddress = resolvedDstAddress;
@@ -81,8 +91,8 @@ public record ConnectionRequestContext(
             return this;
         }
 
-        public ConnectionRequestContextBuilder withMessageType(ConnectionMessageType messageType) {
-            this.messageType = messageType;
+        public ConnectionRequestContextBuilder withOperationType(OperationType messageType) {
+            this.operationType = messageType;
             return this;
         }
 
@@ -98,7 +108,7 @@ public record ConnectionRequestContext(
 
         public ConnectionRequestContext build() {
             return new ConnectionRequestContext(
-                    socksVersion, messageType, dstPort, resolvedDstAddress, userId, exception
+                    socksVersion, operationType, dstPort, resolvedDstAddress, userId, exception
             );
         }
     }

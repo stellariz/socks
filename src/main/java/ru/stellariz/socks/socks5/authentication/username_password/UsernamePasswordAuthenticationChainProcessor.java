@@ -2,11 +2,11 @@ package ru.stellariz.socks.socks5.authentication.username_password;
 
 import java.io.InputStream;
 import java.util.List;
-import ru.stellariz.socks.common.ConnectionRequestChainProcessor;
+import ru.stellariz.socks.common.RequestChainProcessor;
 import ru.stellariz.socks.socks5.context.UsernamePasswordAuthenticationContext;
 
 public class UsernamePasswordAuthenticationChainProcessor extends
-        ConnectionRequestChainProcessor<UsernamePasswordAuthenticationContext.UsernamePasswordAuthenticationContextBuilder, UsernamePasswordAuthenticationContext> {
+        RequestChainProcessor<UsernamePasswordAuthenticationContext.UsernamePasswordAuthenticationContextBuilder, UsernamePasswordAuthenticationContext> {
 
     public UsernamePasswordAuthenticationChainProcessor() {
         super(

@@ -5,6 +5,14 @@ import ru.stellariz.socks.common.utils.SocksVersion;
 import ru.stellariz.socks.socks5.connection.authentication.AuthenticationMethod;
 import ru.stellariz.socks.socks5.exception.AuthenticationException;
 
+/**
+ * Контекст запроса при выборе аутентификации
+ *
+ * @param protocolVersion версия протокола SOCKS
+ * @param methodsNumber кол-во доступных методов для аутентификации ползователя
+ * @param clientAuthentication методы аутентификации
+ * @param exception ошибка при выборе метода аутентификации
+ */
 public record ConnectionAuthenticationContext(
         SocksVersion protocolVersion,
         int methodsNumber,

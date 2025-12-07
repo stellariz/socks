@@ -7,6 +7,9 @@ import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.common.utils.ByteConversionUtils;
 import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
+/**
+ * Обработчик порта хоста назначения
+ */
 class DestinationPortRequestProcessor implements
         ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder>{
 

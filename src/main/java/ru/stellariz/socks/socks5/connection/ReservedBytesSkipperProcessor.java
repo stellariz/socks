@@ -6,6 +6,9 @@ import ru.stellariz.socks.common.ConnectionRequestProcessor;
 import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.socks5.context.ConnectionRequestContext;
 
+/**
+ * Обрабочтик для пропуска зарезервированных байтов
+ */
 class ReservedBytesSkipperProcessor implements
         ConnectionRequestProcessor<ConnectionRequestContext.ConnectionRequestContextBuilder> {
 

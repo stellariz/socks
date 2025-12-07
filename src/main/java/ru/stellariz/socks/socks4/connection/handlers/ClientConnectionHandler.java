@@ -9,26 +9,29 @@ import ru.stellariz.socks.common.ConnectionTypeHandler;
 import ru.stellariz.socks.common.OnFailedConnectionHandler;
 import ru.stellariz.socks.common.exception.ConnectionException;
 import ru.stellariz.socks.common.session.SessionHandler;
-import ru.stellariz.socks.common.utils.ConnectionMessageType;
+import ru.stellariz.socks.common.utils.OperationType;
 import ru.stellariz.socks.socks4.connection.Socks4ConnectionRequestChainProcessor;
 import ru.stellariz.socks.socks4.context.ConnectionRequestContext;
 
-public class MainConnectionHandler {
+/**
+ * Класс, обрабатывающий соединение клиента и устанавливающий соединение со сторонним сервером
+ */
+public class ClientConnectionHandler {
     private static final int SO_DEFAULT_TIMEOUT = 2 * 60 * 100;
 
     private static final Socks4ConnectionRequestChainProcessor SOCKS4_PROCESSOR =
             new Socks4ConnectionRequestChainProcessor();
 
-    private static final Map<ConnectionMessageType, ConnectionTypeHandler<ConnectionRequestContext>> connectionHandlersMap =
+    private static final Map<OperationType, ConnectionTypeHandler<ConnectionRequestContext>> connectionHandlersMap =
             Map.of(
-                    ConnectionMessageType.CONNECT, new ConnectionHandlerOnSucceedHandler(),
-                    ConnectionMessageType.BIND, new BindConnectionOnSucceedHandler()
+                    OperationType.CONNECT, new SucceedConnectionHandler(),
+                    OperationType.BIND, new SucceedBindHandler()
             );
 
     private static final OnFailedConnectionHandler onFailureHandler =
-            new ConnectionHandlerOnFailureHandler();
+            new FailedConnectionHandler();
 
-    public MainConnectionHandler(Socket client) {
+    public ClientConnectionHandler(Socket client) {
         try (var isOrigin = client.getInputStream();
              var osOrigin = client.getOutputStream();
              client;
@@ -53,7 +56,7 @@ public class MainConnectionHandler {
                 Thread.currentThread().getName(), connectionRequestContext.userId());
 
         var connectionHandler =
-                connectionHandlersMap.get(connectionRequestContext.messageType());
+                connectionHandlersMap.get(connectionRequestContext.operationType());
 
         Socket destSocket;
         try {
